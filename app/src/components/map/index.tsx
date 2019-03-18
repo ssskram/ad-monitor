@@ -3,9 +3,11 @@
 
 import * as React from "react"
 import { compose, withProps } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { Helmet } from "react-helmet"
 import * as types from '../../store/types'
+const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer")
+
 const mapStyle = require('./darkStyle.json')
 
 type props = {
@@ -14,7 +16,7 @@ type props = {
 
 type state = {
     zoom: number
-    center : {
+    center: {
         lat: number
         lng: number
     }
@@ -56,6 +58,19 @@ export default class Map extends React.Component<props, state> {
                     mapTypeControl: false
                 }}
             >
+                <MarkerClusterer
+                    onClick={props.onMarkerClustererClick}
+                    averageCenter
+                    enableRetinaIcons
+                    gridSize={60}
+                >
+                    {this.props.events.map(event => (
+                        <Marker
+                            key={event.id}
+                            position={{ lat: event.latitude, lng: event.longitude }}
+                        />
+                    ))}
+                </MarkerClusterer>
             </GoogleMap>
         )
         return (

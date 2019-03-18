@@ -19,8 +19,8 @@ export interface event {
     country: string
     id: string
     ipAddress: string
-    latitude: string
-    longitude: string
+    latitude: number
+    longitude: number
     state: string
     time: string
     userEmail: string

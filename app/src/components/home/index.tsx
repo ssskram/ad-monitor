@@ -18,8 +18,10 @@ export default class Home extends React.Component<{}, state> {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextState == this.state) return false
-        else return true
+        if (this.state.events) {
+            if (nextState.events.length == this.state.events.length) return false
+            else return true
+        } else return true
     }
 
     componentDidMount() {
