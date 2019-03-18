@@ -1,7 +1,12 @@
 import * as React from 'react'
 import { subscribeToEvents } from '../../sockets/riskEvents'
+import * as types from '../../store/types'
 
-export default class Home extends React.Component<{}, {}> {
+type state = {
+    events: types.event[]
+}
+
+export default class Home extends React.Component<{}, state> {
     constructor(props) {
         super(props)
         this.state = {
