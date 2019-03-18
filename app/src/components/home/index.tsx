@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { subscribeToEvents } from '../../sockets/riskEvents'
 import * as types from '../../store/types'
+import Map from '../map'
+import Table from '../table'
 
 type state = {
     events: types.event[]
@@ -12,7 +14,12 @@ export default class Home extends React.Component<{}, state> {
         this.state = {
             events: undefined,
         }
-        subscribeToEvents((err, events) => this.setState({events}))
+        subscribeToEvents((err, events) => this.setState({ events }))
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState == this.state) return false
+        else return true
     }
 
     componentDidMount() {
@@ -20,10 +27,14 @@ export default class Home extends React.Component<{}, state> {
     }
 
     render() {
-        console.log(this.state)
         return (
-            <div className='col-md-10 col-md-offset-1' style={{ marginBottom: '50px' }}>
-                    Home
+            <div style={{ marginBottom: '50px' }}>
+                <Map
+                    events={this.state.events}
+                />
+                <Table
+                    events={this.state.events}
+                />
             </div>
         )
     }
