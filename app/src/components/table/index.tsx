@@ -1,5 +1,8 @@
 import * as React from 'react'
 import * as types from '../../store/types'
+import ReactTable from "react-table"
+import "react-table/react-table.css"
+const moment = require('moment')
 
 type props = {
     events: types.event[]
@@ -8,13 +11,51 @@ type props = {
 export default class Table extends React.Component<props, {}> {
 
     render() {
+
+        const columns = [{
+            Header: '',
+            accessor: 'time',
+            Cell: props => <div>{moment(props.value).format('MM/DD/YYYY hh:mm A')}</div>
+        }, {
+            Header: 'User',
+            accessor: 'userName'
+        }, {
+            Header: 'City',
+            accessor: 'city'
+        }, {
+            Header: 'State',
+            accessor: 'state'
+        }, {
+            Header: 'Country',
+            accessor: 'country'
+        }, {
+            Header: 'Application',
+            accessor: 'appName'
+        }, {
+            Header: 'IP',
+            accessor: 'ipAddress'
+        }, {
+            Header: '',
+            accessor: 'id',
+            Cell: props => <button className='btn'><span className='glyphicon glyphicon-eye-open'></span></button>,
+            maxWidth: 65
+        }]
+
         return (
-            <div className='col-md-10 col-md-offset-1'>
-                <div className='panel'>
-                    <div className='panel-body'>
-                        Table here
-                    </div>
-                </div>
+            <div className='col-md-10 col-md-offset-1' style={{ marginTop: '50px' }}>
+                {this.props.events &&
+                    <ReactTable
+                        data={this.props.events
+                            .sort((a, b) => +new Date(b.time) - +new Date(a.time))
+                        }
+                        columns={columns}
+                        loading={false}
+                        minRows={0}
+                        pageSize={100}
+                        showPageSizeOptions={false}
+                        noDataText=''
+                    />
+                }
             </div>
         )
     }

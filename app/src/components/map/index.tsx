@@ -58,19 +58,22 @@ export default class Map extends React.Component<props, state> {
                     mapTypeControl: false
                 }}
             >
-                <MarkerClusterer
-                    onClick={props.onMarkerClustererClick}
-                    averageCenter
-                    enableRetinaIcons
-                    gridSize={60}
-                >
-                    {this.props.events.map(event => (
-                        <Marker
-                            key={event.id}
-                            position={{ lat: event.latitude, lng: event.longitude }}
-                        />
-                    ))}
-                </MarkerClusterer>
+                {this.props.events &&
+                    <MarkerClusterer
+                        onClick={props.onMarkerClustererClick}
+                        averageCenter
+                        enableRetinaIcons
+                        gridSize={50}
+                        defaultMaxZoom={14}
+                    >
+                        {this.props.events.map(event => (
+                            <Marker
+                                key={event.id}
+                                position={{ lat: event.latitude, lng: event.longitude }}
+                            />
+                        ))}
+                    </MarkerClusterer>
+                }
             </GoogleMap>
         )
         return (
