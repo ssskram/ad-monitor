@@ -13,6 +13,9 @@ export interface messsage {
 
 
 // event
+export interface events {
+    events: event[]
+}
 export interface event {
     appName: string
     city: string

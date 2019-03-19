@@ -7,3 +7,6 @@ export const newMessage = 'reservationSuccess'
 export const success = 'successMessage'
 export const failure = 'failureMessage'
 export const clear = 'clearMessage'
+
+// events
+export const loadEvents = 'loadEvents'
