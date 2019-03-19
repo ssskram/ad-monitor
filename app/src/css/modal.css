@@ -2,7 +2,7 @@
 /* ------------------------- */
 
 .custom-overlay {
-    background: rgba(26, 36, 47, .9);
+    background: rgba(0, 0, 0, .7);
 }
 
 .react-datepicker__portal {
@@ -12,19 +12,16 @@
 .custom-modal {
     z-index: 100000 !important;
     margin: 0 auto !important;
-    background: #FAF7F2;
+    background: transparent;
     max-height: 100vh;
     min-width: 350px;
     overflow-x: hidden;
-    overflow-y: scroll;
-    margin-top: 25px !important;
-    padding: 25px;
+    box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.0);
 }
 
 .styles_closeButton__20ID4 {
     padding: 7px;
-    top: 0 !important;
-    right: 0 !important;
+    margin-top: -5px;
 }
 
 /* Spinner

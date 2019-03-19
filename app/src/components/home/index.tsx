@@ -3,6 +3,7 @@ import { subscribeToEvents } from '../../sockets/riskEvents'
 import * as types from '../../store/types'
 import Map from '../map'
 import Table from '../table'
+import Spinner from '../utilities/spinner'
 
 type state = {
     events: types.event[]
@@ -30,13 +31,23 @@ export default class Home extends React.Component<{}, state> {
 
     render() {
         return (
-            <div style={{ marginBottom: '50px' }}>
+            <div>
+                <h4 className='text-center ubuntu' style={{color: 'white' }}>Previous 48 hours where status == success && state != PA</h4>
                 <Map
                     events={this.state.events}
                 />
+                <br />
+                <br />
                 <Table
+                    containerWidth='col-md-10 col-md-offset-1'
                     events={this.state.events}
+                    pageSize={100}
                 />
+                <br />
+                <br />
+                {!this.state.events &&
+                    <Spinner notice='...loading login events...' />
+                }
             </div>
         )
     }

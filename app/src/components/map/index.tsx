@@ -3,11 +3,13 @@
 
 import * as React from "react"
 import { compose, withProps } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
 import { Helmet } from "react-helmet"
 import * as types from '../../store/types'
+import LoginsPerLocation from '../loginsPerLocation'
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer")
-
+const usIcon = require("../../images/us.png")
+const intlIcon = require("../../images/intl.png")
 const mapStyle = require('./darkStyle.json')
 
 type props = {
@@ -15,6 +17,8 @@ type props = {
 }
 
 type state = {
+    selectedLocation: types.event,
+    viewLoginsPerLocation: boolean
     zoom: number
     center: {
         lat: number
@@ -26,15 +30,39 @@ export default class Map extends React.Component<props, state> {
     constructor(props) {
         super(props)
         this.state = {
+            selectedLocation: undefined,
+            viewLoginsPerLocation: false,
             zoom: 2,
             center: { lat: 40.437470539681442, lng: -79.987124601795273 }
         }
+    }
+
+    closeIW() {
+        this.setState({
+            selectedLocation: undefined,
+            zoom: 6
+        })
+    }
+
+    openIW(event) {
+        this.setState({
+            center: { lat: event.latitude, lng: event.longitude },
+            selectedLocation: event,
+            zoom: 13
+        })
+    }
+
+    countEventsPerLocation() {
+        const atLocation = this.props.events.filter(e => (e.latitude == this.state.selectedLocation.latitude && e.longitude == this.state.selectedLocation.longitude))
+        return atLocation.length
     }
 
     render() {
         const {
             zoom,
             center,
+            selectedLocation,
+            viewLoginsPerLocation
         } = this.state
 
         const key = process.env.REACT_APP_GOOGLE_API
@@ -54,6 +82,7 @@ export default class Map extends React.Component<props, state> {
                 defaultOptions={{
                     styles: mapStyle as any,
                     streetViewControl: false,
+                    fullscreenControl: false,
                     scaleControl: false,
                     mapTypeControl: false
                 }}
@@ -66,12 +95,44 @@ export default class Map extends React.Component<props, state> {
                         gridSize={50}
                         defaultMaxZoom={14}
                     >
-                        {this.props.events.map(event => (
+                        {this.props.events.filter(e => e.country == "US").map(event => (
                             <Marker
                                 key={event.id}
                                 position={{ lat: event.latitude, lng: event.longitude }}
+                                icon={{
+                                    url: usIcon,
+                                    scaledSize: new google.maps.Size(8, 8)
+                                }}
+                                onClick={() => this.openIW(event)}
                             />
                         ))}
+                        {this.props.events.filter(e => e.country != "US").map(event => (
+                            <Marker
+                                key={event.id}
+                                position={{ lat: event.latitude, lng: event.longitude }}
+                                icon={{
+                                    url: intlIcon,
+                                    scaledSize: new google.maps.Size(8, 8)
+                                }}
+                                onClick={() => this.openIW(event)}
+                            />
+                        ))}
+                        {selectedLocation &&
+                            <InfoWindow
+                                onCloseClick={() => this.closeIW()}
+                                position={{ lat: selectedLocation.latitude, lng: selectedLocation.longitude }}
+                                options={{
+                                    maxWidth: 600
+                                }}
+                            >
+                                <div className='text-center'>
+                                    <div>{this.state.selectedLocation.city}</div>
+                                    <div>{this.state.selectedLocation.state}, {this.state.selectedLocation.country}</div>
+                                    <div>Count logins: {this.countEventsPerLocation()}</div>
+                                    <a onClick={() => this.setState({ viewLoginsPerLocation: true })}>View events</a>
+                                </div>
+                            </InfoWindow>
+                        }
                     </MarkerClusterer>
                 }
             </GoogleMap>
@@ -82,6 +143,13 @@ export default class Map extends React.Component<props, state> {
                 <div className='home-map'>
                     <MapComponent />
                 </div>
+                {viewLoginsPerLocation &&
+                    <LoginsPerLocation
+                        selectedLocation={selectedLocation}
+                        events={this.props.events}
+                        setState={this.setState.bind(this)}
+                    />
+                }
             </div>
         )
     }

@@ -15,6 +15,10 @@ a[href^="https://maps.google.com/maps"] {
     display: none !important
 }
 
+.gmnoprint {
+    margin-left: -10px;
+}
+
 .gmnoprint a, .gmnoprint span {
     display: none;
 }

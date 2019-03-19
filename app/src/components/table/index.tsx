@@ -5,6 +5,8 @@ import "react-table/react-table.css"
 const moment = require('moment')
 
 type props = {
+    containerWidth: string
+    pageSize: number
     events: types.event[]
 }
 
@@ -32,9 +34,6 @@ export default class Table extends React.Component<props, {}> {
             Header: 'Application',
             accessor: 'appName'
         }, {
-            Header: 'IP',
-            accessor: 'ipAddress'
-        }, {
             Header: '',
             accessor: 'id',
             Cell: props => <button className='btn'><span className='glyphicon glyphicon-eye-open'></span></button>,
@@ -42,7 +41,7 @@ export default class Table extends React.Component<props, {}> {
         }]
 
         return (
-            <div className='col-md-10 col-md-offset-1' style={{ marginTop: '50px' }}>
+            <div className={this.props.containerWidth}>
                 {this.props.events &&
                     <ReactTable
                         data={this.props.events
@@ -51,7 +50,7 @@ export default class Table extends React.Component<props, {}> {
                         columns={columns}
                         loading={false}
                         minRows={0}
-                        pageSize={100}
+                        pageSize={this.props.pageSize}
                         showPageSizeOptions={false}
                         noDataText=''
                     />

@@ -30,6 +30,10 @@ hr {
     margin: 1em 0;
 }
 
+.oswald {
+    font-family: 'Oswald', sans-serif;
+}
+
 .oswald-header {
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
