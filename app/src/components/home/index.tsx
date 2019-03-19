@@ -2,7 +2,7 @@ import * as React from 'react'
 import { subscribeToEvents } from '../../sockets/riskEvents'
 import * as types from '../../store/types'
 import Map from '../map'
-import Table from '../table'
+import TableWithFilter from '../table/filter'
 import Spinner from '../utilities/spinner'
 
 type state = {
@@ -32,16 +32,14 @@ export default class Home extends React.Component<{}, state> {
     render() {
         return (
             <div>
-                <h4 className='text-center ubuntu' style={{color: 'white' }}>Previous 48 hours where status == success && state != PA</h4>
+                <h4 className='text-center ubuntu' style={{color: 'grey' }}>Previous 48 hours where login == success && state != PA</h4>
                 <Map
                     events={this.state.events}
                 />
                 <br />
                 <br />
-                <Table
-                    containerWidth='col-md-10 col-md-offset-1'
+                <TableWithFilter
                     events={this.state.events}
-                    pageSize={100}
                 />
                 <br />
                 <br />

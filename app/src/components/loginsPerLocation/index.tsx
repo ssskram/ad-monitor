@@ -11,10 +11,6 @@ type props = {
 
 export default class EventsPerLocation extends React.Component<props, {}> {
 
-    eventsPerLocation() {
-
-    }
-
     render() {
         return (
             <Modal
@@ -35,7 +31,6 @@ export default class EventsPerLocation extends React.Component<props, {}> {
                         pageSize={5}
                     />
                 </div>
-
             </Modal>
         )
     }

@@ -13,7 +13,6 @@ type props = {
 export default class Table extends React.Component<props, {}> {
 
     render() {
-
         const columns = [{
             Header: '',
             accessor: 'time',
