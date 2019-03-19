@@ -44,7 +44,7 @@ export default class Table extends React.Component<props, {}> {
         }]
 
         return (
-            <div className={this.props.containerWidth}>
+            <div className={this.props.containerWidth} style={{ marginBottom: '50px' }}>
                 {this.props.events &&
                     <ReactTable
                         data={this.props.events
