@@ -1,10 +1,12 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import * as types from '../../store/types'
 import ReactTable from "react-table"
 import "react-table/react-table.css"
 const moment = require('moment')
 
 type props = {
+    filterable: boolean
     containerWidth: string
     pageSize: number
     events: types.event[]
@@ -14,9 +16,10 @@ export default class Table extends React.Component<props, {}> {
 
     render() {
         const columns = [{
-            Header: '',
+            Header: 'Time',
             accessor: 'time',
-            Cell: props => <div>{moment(props.value).format('MM/DD/YYYY hh:mm A')}</div>
+            Cell: props => <div>{moment(props.value).format('MM/DD/YYYY hh:mm A')}</div>,
+            filterable: false
         }, {
             Header: 'User',
             accessor: 'userName'
@@ -35,8 +38,9 @@ export default class Table extends React.Component<props, {}> {
         }, {
             Header: '',
             accessor: 'id',
-            Cell: props => <button className='btn'><span className='glyphicon glyphicon-eye-open'></span></button>,
-            maxWidth: 65
+            Cell: props => <Link to={'/LoginEvent/id=' + props.original.id}><button className='btn'><span className='glyphicon glyphicon-eye-open'></span></button></Link>,
+            maxWidth: 65,
+            filterable: false
         }]
 
         return (
@@ -49,6 +53,7 @@ export default class Table extends React.Component<props, {}> {
                         columns={columns}
                         loading={false}
                         minRows={0}
+                        filterable={this.props.filterable}
                         pageSize={this.props.pageSize}
                         showPageSizeOptions={false}
                         noDataText=''
