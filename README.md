@@ -19,7 +19,7 @@ This README will focus only on the components of this application that are uniqu
             |── map                 # Map of events
             |── table               # Table of events
         ├── store                   
-            |── events              # 48 hours of login events originating from outside of PA
+            |── events              # persists 48 hours of login events originating from outside of PA
 
 ## Running Locally
 
