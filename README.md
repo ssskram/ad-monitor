@@ -4,6 +4,8 @@ AD Monitor is a monitoring application used by the Department of Innovation & Pe
 
 AD Monitor interfaces with two services: (1) an Azure storage container via [az-table](https://github.com/CityofPittsburgh/az-table), where the past 48 hours of login events are parked and (2) the Microsoft Graph API via [active-directory](https://github.com/CityofPittsburgh/active-directory) to call up complete [signIn](https://docs.microsoft.com/en-us/graph/api/resources/signin?view=graph-rest-1.0) records.
 
+<img src='screenshot.png' width='100%' />
+
 ## A note on boilerplate
 
 The bones of AD Monitor are shared across all client applications developed by Paul Marks for the City of Pittsburgh.  For more in-depth documentation on the structure,  design choices, authentication flow, and installation procedures for this application, please see the documentation for the [boilerplate](https://github.com/CityofPittsburgh/react-typescript-boilerplate).
