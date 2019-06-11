@@ -1,3 +1,1 @@
-export const contributors = [
-    "paul.marks@pittsburghpa.gov"
-]
+export const contributors = ["paul.marks@pittsburghpa.gov"];
